@@ -1,0 +1,308 @@
+[
+  {
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:4",
+        "name": "Add a task to the to-do list",
+        "status": "passed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:5",
+            "match": {
+              "arguments": [],
+              "location": "features/steps/todo_list_steps.py:8"
+            },
+            "name": "the to-do list is empty",
+            "result": {
+              "duration": 0.0015964508056640625,
+              "status": "passed"
+            },
+            "step_type": "given"
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:6",
+            "match": {
+              "arguments": [
+                {
+                  "name": "task",
+                  "value": "Buy groceries"
+                }
+              ],
+              "location": "features/steps/todo_list_steps.py:12"
+            },
+            "name": "the user adds a task \"Buy groceries\"",
+            "result": {
+              "duration": 0.0013380050659179688,
+              "status": "passed"
+            },
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:7",
+            "match": {
+              "arguments": [
+                {
+                  "name": "task",
+                  "value": "Buy groceries"
+                }
+              ],
+              "location": "features/steps/todo_list_steps.py:16"
+            },
+            "name": "the to-do list should contain \"Buy groceries\"",
+            "result": {
+              "duration": 0.0016589164733886719,
+              "status": "passed"
+            },
+            "step_type": "then"
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:9",
+        "name": "List all tasks in the to-do list",
+        "status": "failed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:10",
+            "name": "the to-do list contains tasks",
+            "result": {
+              "duration": 0,
+              "status": "undefined"
+            },
+            "step_type": "given",
+            "table": {
+              "headings": [
+                "Task"
+              ],
+              "rows": [
+                [
+                  "Buy groceries"
+                ],
+                [
+                  "Pay bills"
+                ]
+              ]
+            }
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:14",
+            "name": "the user lists all tasks",
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:15",
+            "name": "the output should contain",
+            "step_type": "then",
+            "table": {
+              "headings": [
+                "Task"
+              ],
+              "rows": [
+                [
+                  "Buy groceries"
+                ],
+                [
+                  "Pay bills"
+                ]
+              ]
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:20",
+        "name": "Mark a task as completed",
+        "status": "failed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:21",
+            "name": "the to-do list contains tasks",
+            "result": {
+              "duration": 0,
+              "status": "undefined"
+            },
+            "step_type": "given",
+            "table": {
+              "headings": [
+                "Task",
+                "Status"
+              ],
+              "rows": [
+                [
+                  "Buy groceries",
+                  "Pending"
+                ]
+              ]
+            }
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:24",
+            "name": "the user marks task \"Buy groceries\" as completed",
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:25",
+            "name": "the to-do list should show task \"Buy groceries\" as completed",
+            "step_type": "then"
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:27",
+        "name": "Clear the entire to-do list",
+        "status": "failed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:28",
+            "name": "the to-do list contains tasks",
+            "result": {
+              "duration": 0,
+              "status": "undefined"
+            },
+            "step_type": "given",
+            "table": {
+              "headings": [
+                "Task"
+              ],
+              "rows": [
+                [
+                  "Buy groceries"
+                ],
+                [
+                  "Pay bills"
+                ]
+              ]
+            }
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:32",
+            "name": "the user clears the to-do list",
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:33",
+            "name": "the to-do list should be empty",
+            "step_type": "then"
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:36",
+        "name": "Delete a specific task",
+        "status": "failed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:37",
+            "name": "the to-do list contains tasks",
+            "result": {
+              "duration": 0,
+              "status": "undefined"
+            },
+            "step_type": "given",
+            "table": {
+              "headings": [
+                "Task"
+              ],
+              "rows": [
+                [
+                  "Buy groceries"
+                ],
+                [
+                  "Pay bills"
+                ]
+              ]
+            }
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:41",
+            "name": "the user deletes the task \"Pay bills\"",
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:42",
+            "name": "the to-do list should contain only \"Buy groceries\"",
+            "step_type": "then"
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "keyword": "Scenario",
+        "location": "features/todo_list.feature:44",
+        "name": "Edit a task",
+        "status": "failed",
+        "steps": [
+          {
+            "keyword": "Given",
+            "location": "features/todo_list.feature:45",
+            "name": "the to-do list contains tasks",
+            "result": {
+              "duration": 0,
+              "status": "undefined"
+            },
+            "step_type": "given",
+            "table": {
+              "headings": [
+                "Task"
+              ],
+              "rows": [
+                [
+                  "Buy groceries"
+                ]
+              ]
+            }
+          },
+          {
+            "keyword": "When",
+            "location": "features/todo_list.feature:48",
+            "name": "the user edits the task \"Buy groceries\" to \"Buy vegetables\"",
+            "step_type": "when"
+          },
+          {
+            "keyword": "Then",
+            "location": "features/todo_list.feature:49",
+            "name": "the to-do list should contain \"Buy vegetables\"",
+            "step_type": "then"
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "keyword": "Feature",
+    "location": "features/todo_list.feature:1",
+    "name": "To-Do List Management",
+    "status": "failed",
+    "tags": [],
+    "uri": "features/todo_list.feature"
+  }
+]
