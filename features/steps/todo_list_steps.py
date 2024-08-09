@@ -1,68 +1,69 @@
 from behave import given, when, then
-from todo_list import ToDoList, Task
+from todo_list import ToDoListManager
 
+# Inicializar el ToDoListManager
+to_do_manager = ToDoListManager()
+
+# Pasos solicitados
 @given('the to-do list is empty')
-def step_given_todo_list_empty(context):
-    context.todo_list = ToDoList()
+def step_impl(context):
+    to_do_manager.clear_tasks()
 
-@when('the user adds a task "{title}" with description "{description}" due on "{due_date}" and priority "{priority}"')
-def step_when_add_task(context, title, description, due_date, priority):
-    task = Task(title, description, due_date, priority)
-    context.todo_list.add_task(task)
+@when('the user adds a task "{task}"')
+def step_impl(context, task):
+    to_do_manager.add_task(task)
 
-@then('the to-do list should contain "{title}"')
-def step_then_todo_list_should_contain(context, title):
-    tasks = [task.title for task in context.todo_list.tasks]
-    assert title in tasks
+@then('the to-do list should contain "{task}"')
+def step_impl(context, task):
+    tasks = [t['name'] for t in to_do_manager.list_tasks()]
+    assert task in tasks, f'Task "{task}" not found in the to-do list'
 
 @given('the to-do list contains tasks:')
-def step_given_todo_list_contains_tasks(context):
-    context.todo_list = ToDoList()
+def step_impl(context):
+    to_do_manager.clear_tasks()
     for row in context.table:
-        task = Task(row['Task'], "", "", "")
-        context.todo_list.add_task(task)
+        to_do_manager.add_task(row['Task'])
 
 @when('the user lists all tasks')
-def step_when_user_lists_tasks(context):
-    context.task_list_output = context.todo_list.list_tasks()
+def step_impl(context):
+    context.tasks = to_do_manager.list_tasks()
 
 @then('the output should contain:')
-def step_then_output_should_contain(context):
-    for row in context.text.strip().splitlines():
-        assert row in context.task_list_output
+def step_impl(context):
+    task_names = [task['name'] for task in context.tasks]
+    for row in context.table:
+        assert row['Task'] in task_names, f'Task "{row["Task"]}" not found in output'
 
-@when('the user marks task "{title}" as completed')
-def step_when_user_marks_task_completed(context, title):
-    context.todo_list.mark_task_as_completed(title)
+@when('the user marks task "{task}" as completed')
+def step_impl(context, task):
+    to_do_manager.mark_task_as_completed(task)
 
-@then('the to-do list should show task "{title}" as completed')
-def step_then_todo_list_should_show_completed(context, title):
-    task = next((task for task in context.todo_list.tasks if task.title == title), None)
-    assert task is not None and task.is_completed
+@then('the to-do list should show task "{task}" as completed')
+def step_impl(context, task):
+    for t in to_do_manager.list_tasks():
+        if t["name"] == task:
+            assert t["completed"] is True, f'Task "{task}" is not marked as completed'
+            return
+    assert False, f'Task "{task}" not found in the to-do list'
 
 @when('the user clears the to-do list')
-def step_when_user_clears_todo_list(context):
-    context.todo_list.clear_tasks()
+def step_impl(context):
+    to_do_manager.clear_tasks()
 
 @then('the to-do list should be empty')
-def step_then_todo_list_should_be_empty(context):
-    assert len(context.todo_list.tasks) == 0
+def step_impl(context):
+    assert len(to_do_manager.list_tasks()) == 0, 'The to-do list is not empty'
 
-@when('the user adds a task "{title}" with description "{description}" due on "{due_date}" and priority "{priority}"')
-def step_when_add_task(context, title, description, due_date, priority):
-    task = Task(title, description, due_date, priority)
-    context.todo_list.add_task(task)
+# Pasos extras
+@when('the user deletes the task "{task}"')
+def step_impl(context, task):
+    to_do_manager.delete_task(task)
 
-@then('the to-do list should contain "{count}" tasks with the title "{title}"')
-def step_then_todo_list_should_contain_multiple(context, count, title):
-    tasks = [task for task in context.todo_list.tasks if task.title == title]
-    assert len(tasks) == int(count)
+@then('the to-do list should contain only "{task}"')
+def step_impl(context, task):
+    tasks = [t['name'] for t in to_do_manager.list_tasks()]
+    assert tasks == [task], f'To-do list contains tasks other than "{task}"'
 
-@when('the user lists only completed tasks')
-def step_when_user_lists_completed_tasks(context):
-    context.task_list_output = "\n".join(str(task) for task in context.todo_list.tasks if task.is_completed)
-
-@then('the output should not contain:')
-def step_then_output_should_not_contain(context):
-    for row in context.text.strip().splitlines():
-        assert row not in context.task_list_output
+@when('the user edits the task "{old_task}" to "{new_task}"')
+def step_impl(context, old_task, new_task):
+    to_do_manager.edit_task(old_task, new_task)

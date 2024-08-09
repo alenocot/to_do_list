@@ -1,56 +1,31 @@
-class Task:
-    def __init__(self, title, description, due_date, priority):
-        self.title = title
-        self.description = description
-        self.due_date = due_date
-        self.priority = priority
-        self.is_completed = False
-
-    def mark_as_completed(self):
-        self.is_completed = True
-
-    def __str__(self):
-        status = "Completed" if self.is_completed else "Pending"
-        return f"{self.title} (Priority: {self.priority}, Due: {self.due_date}) - {status}"
-
-
-class ToDoList:
+class ToDoListManager:
     def __init__(self):
         self.tasks = []
 
+    # Funcionalidades solicitadas
     def add_task(self, task):
-        self.tasks.append(task)
+        self.tasks.append({"name": task, "completed": False})
 
     def list_tasks(self):
-        return "\n".join(str(task) for task in self.tasks)
+        return self.tasks
 
-    def mark_task_as_completed(self, title):
+    def mark_task_as_completed(self, task_name):
         for task in self.tasks:
-            if task.title == title:
-                task.mark_as_completed()
-                return task
-        return None
+            if task["name"] == task_name:
+                task["completed"] = True
+                return True
+        return False
 
     def clear_tasks(self):
         self.tasks.clear()
 
+    # Funcionalidades extras
+    def delete_task(self, task_name):
+        self.tasks = [task for task in self.tasks if task["name"] != task_name]
 
-if __name__ == "__main__":
-    todo_list = ToDoList()
-
-    # Example interaction (optional for testing)
-    task1 = Task("Buy groceries", "Buy milk, eggs, and bread", "2024-08-10", "High")
-    task2 = Task("Pay bills", "Pay electricity and water bills", "2024-08-12", "Medium")
-
-    todo_list.add_task(task1)
-    todo_list.add_task(task2)
-
-    print(todo_list.list_tasks())
-
-    todo_list.mark_task_as_completed("Buy groceries")
-    print("\nAfter marking 'Buy groceries' as completed:\n")
-    print(todo_list.list_tasks())
-
-    todo_list.clear_tasks()
-    print("\nAfter clearing the tasks:\n")
-    print(todo_list.list_tasks())
+    def edit_task(self, old_name, new_name):
+        for task in self.tasks:
+            if task["name"] == old_name:
+                task["name"] = new_name
+                return True
+        return False
